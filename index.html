@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Divine Chamber</title>
     <meta
       name="description"
-      content="Divine Chamber story hub with dedicated character, narrative, and library pages."
+      content="Divine Chamber is a private bureau archive for chamber drama, city incidents, symbolic conflict, and long-form story writing."
     />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -16,149 +16,138 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <div class="mobile-topbar d-lg-none">
-      <button
-        class="btn btn-outline-dark btn-sm"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#mobileNav"
-        aria-controls="mobileNav"
-      >
-        Menu
-      </button>
-      <a class="mobile-brand" href="index.html">Divine Chamber</a>
-    </div>
-
-    <div class="offcanvas offcanvas-start mobile-drawer d-lg-none" tabindex="-1" id="mobileNav">
-      <div class="offcanvas-header border-bottom">
-        <div>
-          <p class="drawer-kicker mb-1">Story Hub</p>
-          <h2 class="drawer-title mb-0">Divine Chamber</h2>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <nav class="nav flex-column site-nav">
-          <a class="nav-link active" aria-current="page" href="index.html">Overview</a>
-          <a class="nav-link" href="characters.html">Characters</a>
-          <a class="nav-link" href="narrative.html">Narrative</a>
-          <a class="nav-link" href="library.html">Library</a>
-        </nav>
-      </div>
-    </div>
+  <body data-page="overview">
+    <div id="mobile-shell"></div>
 
     <div class="container-fluid px-0 site-shell">
       <div class="row g-0">
         <aside class="col-lg-3 col-xl-2 d-none d-lg-block sidebar-column">
-          <div class="sidebar-panel">
-            <p class="sidebar-kicker mb-2">Story Hub</p>
-            <a class="sidebar-brand" href="index.html">Divine Chamber</a>
-            <p class="sidebar-copy mt-3 mb-4">
-              A quiet archive for characters, structure, and every written fragment of the project.
-            </p>
-
-            <nav class="nav flex-column site-nav">
-              <a class="nav-link active" aria-current="page" href="index.html">Overview</a>
-              <a class="nav-link" href="characters.html">Characters</a>
-              <a class="nav-link" href="narrative.html">Narrative</a>
-              <a class="nav-link" href="library.html">Library</a>
-            </nav>
-
-            <div class="sidebar-note mt-auto">
-              Markdown story files live in <code>content/</code> and open in their own reader page.
-            </div>
-          </div>
+          <div id="sidebar-shell"></div>
         </aside>
 
         <main class="col-lg-9 col-xl-10 content-column">
           <div class="content-wrap">
-            <section class="hero-card">
-              <div class="row g-4 align-items-center">
-                <div class="col-12 col-xl-7">
-                  <p class="page-kicker">Overview</p>
-                  <h1 class="page-title">Divine Chamber</h1>
-                  <p class="lead page-copy mt-4">
-                    A multi-page story atlas built to feel more like a printed dossier
-                    than a scrolling landing page.
-                  </p>
+            <section class="hero-card hero-card--home">
+              <div class="hero-card__inner">
+                <p class="page-kicker">Project Home</p>
+                <h1 class="page-title">Divine Chamber</h1>
+                <p class="hero-lead">
+                  A literary mystery project where a charged symbolic chamber and a discreet investigative bureau keep rewriting each other.
+                </p>
+                <p class="page-copy hero-copy">
+                  Divine Chamber is both a theatrical interior and a case-driven city
+                  archive: chamber wit, eros-toned psychological tension, occult-political
+                  mystery, and bureau procedure written as long-form story material.
+                </p>
+
+                <div class="hero-actions">
+                  <a class="btn btn-brass" href="library.html">Enter the Archive</a>
+                  <a class="btn btn-outline-light" href="cases.html">View Bureau Cases</a>
+                </div>
+              </div>
+
+              <div class="hero-card__aside">
+                <div class="hero-note">
+                  <p class="card-kicker">Atmosphere</p>
                   <p class="page-copy mb-0">
-                    Move through dedicated spaces for characters, narrative structure,
-                    and the Markdown library. Each section now loads independently, and
-                    each chapter, scene, or play can open in its own reading view.
+                    Dark academia, occult bureaucracy, polished archive wood, candlelit
+                    intelligence, and characters who speak like they know the room is listening.
                   </p>
                 </div>
-                <div class="col-12 col-xl-5">
-                  <div class="rune-panel">
-                    <div class="rune-mark">DC</div>
-                    <p class="rune-copy mb-0">
-                      Archive the myth. Track the cast. Read the work one page at a time.
-                    </p>
-                  </div>
-                </div>
               </div>
             </section>
 
             <section class="page-section mt-4">
-              <div class="row row-cols-1 row-cols-xl-3 g-4">
-                <div class="col">
-                  <article class="paper-card h-100">
-                    <p class="card-kicker">Character</p>
-                    <h2 class="section-card-title">Cast Ledger</h2>
-                    <p class="page-copy">
-                      A character page styled like a dossier spread, with a selectable
-                      roster and a focused detail panel.
-                    </p>
-                    <a class="btn btn-ink mt-3" href="characters.html">Open Characters</a>
-                  </article>
-                </div>
+              <div class="section-header">
+                <p class="page-kicker">Dual Identity</p>
+                <h2 class="section-title">Two rooms, one project</h2>
+              </div>
 
-                <div class="col">
-                  <article class="paper-card h-100">
-                    <p class="card-kicker">Narrative</p>
-                    <h2 class="section-card-title">Story Spine</h2>
-                    <p class="page-copy">
-                      Keep premise, themes, acts, and world logic in one dedicated page
-                      instead of burying them inside a long homepage.
-                    </p>
-                    <a class="btn btn-ink mt-3" href="narrative.html">Open Narrative</a>
-                  </article>
-                </div>
+              <div class="dual-grid">
+                <article class="feature-panel feature-panel--chamber">
+                  <p class="card-kicker">The Internal Chamber</p>
+                  <h3 class="feature-title">Theatrical, archetypal, intimate</h3>
+                  <p class="page-copy">
+                    The chamber hosts symbolic conflict, charged wit, eros undertones,
+                    rivalry, interpretation, reversals, and psychologically intelligent
+                    character interplay.
+                  </p>
+                </article>
 
-                <div class="col">
-                  <article class="paper-card h-100">
-                    <p class="card-kicker">Library</p>
-                    <h2 class="section-card-title">Written Archive</h2>
-                    <p class="page-copy">
-                      Browse chapters, scenes, and plays from Markdown, then open each
-                      one in its own dedicated reader page.
-                    </p>
-                    <a class="btn btn-ink mt-3" href="library.html">Open Library</a>
-                  </article>
-                </div>
+                <article class="feature-panel feature-panel--bureau">
+                  <p class="card-kicker">The External Bureau</p>
+                  <h3 class="feature-title">Investigative, political, urban</h3>
+                  <p class="page-copy">
+                    The bureau handles strange incidents, political distortions, witness
+                    statements, municipal pressure, and the city-level consequences of what
+                    the chamber refuses to keep private.
+                  </p>
+                </article>
               </div>
             </section>
 
             <section class="page-section mt-4">
-              <div class="paper-card wide-panel">
-                <div class="row g-4">
-                  <div class="col-xl-7">
-                    <p class="card-kicker">Project Method</p>
-                    <h2 class="section-card-title">Why the new structure works better</h2>
-                    <p class="page-copy mb-0">
-                      The site now behaves more like a small reference archive. The
-                      left navigation stays consistent, the main sections have room to
-                      breathe, and readers can move directly into a single story entry
-                      without navigating through unrelated content first.
-                    </p>
+              <div class="section-header">
+                <p class="page-kicker">Entry Points</p>
+                <h2 class="section-title">Browse the archive by function</h2>
+              </div>
+
+              <div class="entry-grid entry-grid--wide">
+                <article class="archive-card archive-card--profile">
+                  <p class="archive-card__eyebrow">Cast</p>
+                  <h3 class="archive-card__title">Chamber Cast</h3>
+                  <p class="archive-card__summary">
+                    Read the chamber and bureau presences as dossiers rather than generic character bios.
+                  </p>
+                  <div class="archive-card__footer">
+                    <a class="btn btn-outline-light btn-sm" href="characters.html">Open Cast</a>
                   </div>
-                  <div class="col-xl-5">
-                    <ul class="detail-list mb-0">
-                      <li>Dedicated pages for `Overview`, `Characters`, `Narrative`, and `Library`.</li>
-                      <li>Individual reader pages for Markdown entries.</li>
-                      <li>A softer, paper-like visual direction inspired by your reference.</li>
-                    </ul>
+                </article>
+
+                <article class="archive-card archive-card--dossier">
+                  <p class="archive-card__eyebrow">Incidents</p>
+                  <h3 class="archive-card__title">Bureau Cases</h3>
+                  <p class="archive-card__summary">
+                    Follow city incidents, case codes, political pressure, and the bureau’s attempts to frame what the chamber distorts.
+                  </p>
+                  <div class="archive-card__footer">
+                    <a class="btn btn-outline-light btn-sm" href="cases.html">Open Cases</a>
                   </div>
+                </article>
+
+                <article class="archive-card archive-card--reference">
+                  <p class="archive-card__eyebrow">Systems</p>
+                  <h3 class="archive-card__title">World & Symbolic Files</h3>
+                  <p class="archive-card__summary">
+                    Keep the city, Crown, bureau charter, and chamber logic readable without losing atmosphere.
+                  </p>
+                  <div class="archive-card__footer">
+                    <a class="btn btn-outline-light btn-sm" href="world.html">Open World</a>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="page-section mt-4">
+              <div class="section-header">
+                <p class="page-kicker">Archive Pulse</p>
+                <h2 class="section-title">Current movement</h2>
+              </div>
+
+              <div class="stats-grid" id="home-stats"></div>
+
+              <div class="row g-4 mt-1">
+                <div class="col-xl-7">
+                  <div class="section-subheader">
+                    <h3 class="subsection-title">Featured Files</h3>
+                  </div>
+                  <div class="entry-grid" id="home-featured"></div>
+                </div>
+                <div class="col-xl-5">
+                  <div class="section-subheader">
+                    <h3 class="subsection-title">Recent Chronology</h3>
+                  </div>
+                  <div class="stack-list" id="home-recent"></div>
                 </div>
               </div>
             </section>
@@ -172,5 +161,8 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <script src="shell.js" defer></script>
+    <script src="archive-core.js" defer></script>
+    <script src="home.js" defer></script>
   </body>
 </html>

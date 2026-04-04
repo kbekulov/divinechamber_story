@@ -1,132 +1,147 @@
-const manifestPath = "content/library-manifest.json";
+const facetFilters = document.getElementById("archive-facet-filters");
+const typeSelect = document.getElementById("archive-type");
+const statusSelect = document.getElementById("archive-status");
+const characterSelect = document.getElementById("archive-character");
+const caseSelect = document.getElementById("archive-case");
+const archiveCount = document.getElementById("archive-count");
+const archiveList = document.getElementById("library-list");
 
-const state = {
+const archiveState = {
   entries: [],
-  filter: "all",
+  facet: "all",
+  type: "all",
+  status: "all",
+  character: "all",
+  case: "all",
 };
 
-const libraryList = document.getElementById("library-list");
-const filterButtons = Array.from(document.querySelectorAll(".filter-button"));
-
-if (libraryList) {
-  initializeLibrary();
+if (facetFilters && typeSelect && statusSelect && characterSelect && caseSelect && archiveCount && archiveList) {
+  initializeArchive();
 }
 
-async function initializeLibrary() {
-  wireFilters();
+async function initializeArchive() {
+  const manifest = await window.DivineChamber.fetchManifest();
+  archiveState.entries = manifest.entries;
 
-  try {
-    const response = await fetch(manifestPath);
-    if (!response.ok) {
-      throw new Error(`Manifest request failed with ${response.status}`);
-    }
+  const params = new URLSearchParams(window.location.search);
+  archiveState.facet = params.get("facet") || "all";
+  archiveState.type = params.get("type") || "all";
+  archiveState.status = params.get("status") || "all";
+  archiveState.character = params.get("character") || "all";
+  archiveState.case = params.get("case") || "all";
 
-    const manifest = await response.json();
-    state.entries = Array.isArray(manifest.entries) ? manifest.entries : [];
-    renderEntries();
-  } catch (error) {
-    libraryList.innerHTML = `
-      <div class="entry-card">
-        <p class="card-kicker">Manifest Missing</p>
-        <p class="empty-state-copy mb-0">
-          ${escapeHtml(error.message)}. Rebuild the archive with
-          <code>python3 scripts/build_library_manifest.py</code>.
-        </p>
-      </div>
-    `;
-  }
+  populateFacetFilters(manifest.collections.facets);
+  populateSelect(typeSelect, "All Types", manifest.collections.types, window.DivineChamber.formatType, archiveState.type);
+  populateSelect(statusSelect, "All Statuses", manifest.collections.statuses, window.DivineChamber.formatStatus, archiveState.status);
+  populateSelect(characterSelect, "All Characters", manifest.collections.characters, (value) => value, archiveState.character);
+  populateSelect(
+    caseSelect,
+    "All Cases",
+    manifest.collections.cases,
+    (value) => archiveState.entries.find((entry) => entry.case === value)?.case_name || window.DivineChamber.sentenceCase(value),
+    archiveState.case
+  );
+
+  wireArchiveControls();
+  renderArchive();
 }
 
-function wireFilters() {
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      state.filter = button.dataset.filter || "all";
-
-      filterButtons.forEach((item) => {
-        const isActive = item === button;
-        item.classList.toggle("active", isActive);
-        item.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-
-      renderEntries();
-    });
-  });
+function populateFacetFilters(facets) {
+  facetFilters.innerHTML = ["all", ...facets]
+    .map((facet) => {
+      const isActive = archiveState.facet === facet;
+      const label = facet === "all" ? "All Facets" : window.DivineChamber.formatFacet(facet);
+      return `
+        <button class="btn ${isActive ? "btn-brass" : "btn-outline-light"} filter-chip" type="button" data-facet="${facet}">
+          ${label}
+        </button>
+      `;
+    })
+    .join("");
 }
 
-function getEntries() {
-  if (state.filter === "all") {
-    return state.entries;
-  }
-
-  return state.entries.filter((entry) => entry.kind === state.filter);
-}
-
-function renderEntries() {
-  const entries = getEntries();
-
-  if (!entries.length) {
-    libraryList.innerHTML = `
-      <div class="entry-card">
-        <p class="card-kicker">No Entries</p>
-        <p class="empty-state-copy mb-0">
-          No items match this filter yet.
-        </p>
-      </div>
-    `;
-    return;
-  }
-
-  libraryList.innerHTML = entries
-    .map(
-      (entry) => `
-        <article class="entry-card">
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-            <span class="entry-kind">${formatKind(entry.kind)}</span>
-            <span class="page-copy small mb-0">${formatOrder(entry.order)}</span>
-          </div>
-          <h2 class="entry-title mb-3">${escapeHtml(entry.title)}</h2>
-          <p class="entry-summary mb-4">${escapeHtml(entry.summary || "No summary provided yet.")}</p>
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-            <span class="page-copy small mb-0">${escapeHtml(entry.status || "Draft")}</span>
-            <a class="btn btn-ink btn-sm" href="reader.html?id=${encodeURIComponent(entry.id)}">
-              Open Entry
-            </a>
-          </div>
-        </article>
-      `
+function populateSelect(select, allLabel, values, formatter, currentValue) {
+  select.innerHTML = [`<option value="all">${allLabel}</option>`]
+    .concat(
+      values.map(
+        (value) =>
+          `<option value="${window.DivineChamber.escapeHtml(value)}" ${
+            value === currentValue ? "selected" : ""
+          }>${window.DivineChamber.escapeHtml(formatter(value))}</option>`
+      )
     )
     .join("");
 }
 
-function formatKind(kind) {
-  if (kind === "chapter") {
-    return "Chapter";
-  }
+function wireArchiveControls() {
+  facetFilters.querySelectorAll("[data-facet]").forEach((button) => {
+    button.addEventListener("click", () => {
+      archiveState.facet = button.dataset.facet;
+      populateFacetFilters([...new Set(archiveState.entries.map((entry) => entry.facet))]);
+      renderArchive();
+    });
+  });
 
-  if (kind === "scene") {
-    return "Scene";
-  }
+  typeSelect.addEventListener("change", () => {
+    archiveState.type = typeSelect.value;
+    renderArchive();
+  });
 
-  if (kind === "play") {
-    return "Play";
-  }
+  statusSelect.addEventListener("change", () => {
+    archiveState.status = statusSelect.value;
+    renderArchive();
+  });
 
-  return "Entry";
+  characterSelect.addEventListener("change", () => {
+    archiveState.character = characterSelect.value;
+    renderArchive();
+  });
+
+  caseSelect.addEventListener("change", () => {
+    archiveState.case = caseSelect.value;
+    renderArchive();
+  });
 }
 
-function formatOrder(order) {
-  if (!order) {
-    return "Unordered";
-  }
+function getFilteredEntries() {
+  return archiveState.entries.filter((entry) => {
+    if (archiveState.facet !== "all" && entry.facet !== archiveState.facet) {
+      return false;
+    }
+    if (archiveState.type !== "all" && entry.type !== archiveState.type) {
+      return false;
+    }
+    if (archiveState.status !== "all" && entry.status !== archiveState.status) {
+      return false;
+    }
+    if (
+      archiveState.character !== "all" &&
+      !(entry.characters || []).includes(archiveState.character)
+    ) {
+      return false;
+    }
+    if (archiveState.case !== "all" && entry.case !== archiveState.case) {
+      return false;
+    }
 
-  return `#${String(order).padStart(2, "0")}`;
+    return true;
+  });
 }
 
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+function renderArchive() {
+  const filtered = window.DivineChamber.byChronology(getFilteredEntries());
+  archiveCount.innerHTML = `
+    <span class="archive-result-line__count">${filtered.length}</span>
+    <span class="archive-result-line__label">matching files in the archive</span>
+  `;
+
+  archiveList.innerHTML = filtered.length
+    ? filtered
+        .map((entry) =>
+          window.DivineChamber.renderEntryCard(entry, {
+            buttonLabel: "Open File",
+          })
+        )
+        .join("")
+    : `<div class="empty-card">No archive files match the current filters.</div>`;
 }

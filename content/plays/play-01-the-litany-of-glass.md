@@ -1,8 +1,18 @@
 ---
 title: Play I - The Litany of Glass
+type: play
+facet: chamber
+section: archive
 order: 1
-status: In Progress
+chronology: 38
+status: in-progress
+canon: working
+case: litany-glass
+characters: Anima | Goat | Sherie
+tags: ritual | rehearsal | prophecy | performance
 summary: Mira stages a ritualized retelling that begins echoing future events, blurring rehearsal and prophecy.
+template: literary
+featured: true
 ---
 
 # Play I - The Litany of Glass

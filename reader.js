@@ -1,13 +1,30 @@
-const manifestPath = "content/library-manifest.json";
-const titleNode = document.getElementById("reader-title");
-const kindNode = document.getElementById("reader-kind");
-const summaryNode = document.getElementById("reader-summary");
-const metaNode = document.getElementById("reader-meta");
-const bodyNode = document.getElementById("reader-body");
-const relatedNode = document.getElementById("related-list");
-const sourceLink = document.getElementById("reader-source-link");
+const readerTitle = document.getElementById("reader-title");
+const readerKind = document.getElementById("reader-kind");
+const readerSummary = document.getElementById("reader-summary");
+const readerMeta = document.getElementById("reader-meta");
+const readerRecord = document.getElementById("reader-record");
+const readerBody = document.getElementById("reader-body");
+const readerContext = document.getElementById("reader-context");
+const relatedList = document.getElementById("related-list");
+const readerNav = document.getElementById("reader-nav");
+const readerSourceLink = document.getElementById("reader-source-link");
+const readerCard = document.getElementById("reader-card");
+const readerLayout = document.getElementById("reader-layout");
 
-if (titleNode && kindNode && summaryNode && metaNode && bodyNode && relatedNode && sourceLink) {
+if (
+  readerTitle &&
+  readerKind &&
+  readerSummary &&
+  readerMeta &&
+  readerRecord &&
+  readerBody &&
+  readerContext &&
+  relatedList &&
+  readerNav &&
+  readerSourceLink &&
+  readerCard &&
+  readerLayout
+) {
   initializeReader();
 }
 
@@ -16,237 +33,141 @@ async function initializeReader() {
   const entryId = params.get("id");
 
   if (!entryId) {
-    renderMissing("No story entry id was provided in the URL.");
+    renderMissing("No archive file id was provided in the URL.");
     return;
   }
 
   try {
-    const manifestResponse = await fetch(manifestPath);
-    if (!manifestResponse.ok) {
-      throw new Error(`Manifest request failed with ${manifestResponse.status}`);
-    }
-
-    const manifest = await manifestResponse.json();
-    const entries = Array.isArray(manifest.entries) ? manifest.entries : [];
+    const { entries } = await window.DivineChamber.fetchManifest();
     const entry = entries.find((item) => item.id === entryId);
 
     if (!entry) {
-      renderMissing("This story entry could not be found in the manifest.");
+      renderMissing("This archive file could not be found in the manifest.");
       return;
     }
 
-    document.title = `${entry.title} | Divine Chamber`;
-    kindNode.textContent = formatKind(entry.kind);
-    titleNode.textContent = entry.title;
-    summaryNode.textContent = entry.summary || "No summary provided yet.";
-    sourceLink.href = entry.path;
-    metaNode.innerHTML = `
-      <span class="meta-pill">${formatKind(entry.kind)}</span>
-      <span class="meta-pill">${escapeHtml(entry.status || "Draft")}</span>
-      <span class="meta-pill">${formatOrder(entry.order)}</span>
-    `;
-
-    const storyResponse = await fetch(entry.path);
-    if (!storyResponse.ok) {
-      throw new Error(`Content request failed with ${storyResponse.status}`);
+    const response = await fetch(entry.path);
+    if (!response.ok) {
+      throw new Error(`Content request failed with ${response.status}`);
     }
 
-    const markdown = await storyResponse.text();
-    bodyNode.innerHTML = renderMarkdown(markdown);
-    renderRelated(entries, entry);
+    const markdown = await response.text();
+    const related = window.DivineChamber.getRelatedEntries(entries, entry, 4);
+    const prevNext = window.DivineChamber.findPrevNext(entries, entry);
+    const fields = entry.fields || {};
+
+    document.title = `${entry.title} | Divine Chamber`;
+    readerKind.textContent = window.DivineChamber.formatType(entry.type);
+    readerTitle.textContent = entry.title;
+    readerSummary.textContent = entry.summary || "No summary provided yet.";
+    readerSourceLink.href = entry.path;
+    readerCard.className = `reader-card reader-card--${entry.template} reader-card--${entry.facet}`;
+    readerLayout.dataset.template = entry.template;
+    readerMeta.innerHTML = window.DivineChamber.renderBadges(entry);
+    readerRecord.innerHTML = [
+      recordItem("Facet", window.DivineChamber.formatFacet(entry.facet)),
+      recordItem("Status", window.DivineChamber.formatStatus(entry.status)),
+      recordItem("Canon", window.DivineChamber.sentenceCase(entry.canon)),
+      recordItem("Chronology", window.DivineChamber.orderLabel(entry)),
+      recordItem("Case", entry.case_name),
+      recordItem("Role", fields.role),
+      recordItem("Affiliation", fields.affiliation),
+      recordItem("Archetype", fields.archetype),
+      recordItem("Priority", fields.priority),
+      recordItem("Location", fields.location),
+    ]
+      .filter(Boolean)
+      .join("");
+
+    readerBody.innerHTML = window.DivineChamber.renderMarkdown(markdown);
+    readerContext.innerHTML = `
+      ${entry.characters?.length ? blockRow("Characters", entry.characters) : ""}
+      ${entry.tags?.length ? blockRow("Tags", entry.tags) : ""}
+      ${
+        entry.case_name
+          ? `<div class="context-block">
+              <span class="context-block__label">Case Cluster</span>
+              <a class="context-link" href="cases.html?case=${encodeURIComponent(entry.case)}">${window.DivineChamber.escapeHtml(
+                entry.case_name
+              )}</a>
+            </div>`
+          : ""
+      }
+      <div class="context-block">
+        <span class="context-block__label">Type</span>
+        <span class="page-copy mb-0">${window.DivineChamber.formatType(entry.type)}</span>
+      </div>
+    `;
+
+    relatedList.innerHTML = related.length
+      ? related
+          .map((item) =>
+            window.DivineChamber.renderEntryCard(item, {
+              buttonLabel: "Open File",
+              showStatus: false,
+            })
+          )
+          .join("")
+      : `<div class="empty-card">No related files have been identified yet.</div>`;
+
+    readerNav.innerHTML = `
+      ${navLink(prevNext.previous, "Previous")}
+      ${navLink(prevNext.next, "Next")}
+    `;
   } catch (error) {
     renderMissing(error.message);
   }
 }
 
 function renderMissing(message) {
-  kindNode.textContent = "Reader";
-  titleNode.textContent = "Entry unavailable";
-  summaryNode.textContent = message;
-  metaNode.innerHTML = "";
-  bodyNode.innerHTML = `<p class="page-copy mb-0">${escapeHtml(message)}</p>`;
-  relatedNode.innerHTML = `
-    <div class="related-card">
-      <p class="empty-state-copy mb-0">Return to the library and choose another entry.</p>
+  readerKind.textContent = "Reader";
+  readerTitle.textContent = "Archive file unavailable";
+  readerSummary.textContent = message;
+  readerMeta.innerHTML = "";
+  readerRecord.innerHTML = "";
+  readerBody.innerHTML = `<p class="page-copy mb-0">${window.DivineChamber.escapeHtml(message)}</p>`;
+  readerContext.innerHTML = `<p class="page-copy mb-0">Return to the archive and choose another file.</p>`;
+  relatedList.innerHTML = `<div class="empty-card">No related files available.</div>`;
+  readerNav.innerHTML = "";
+  readerSourceLink.classList.add("disabled");
+  readerSourceLink.removeAttribute("href");
+}
+
+function recordItem(label, value) {
+  if (!value) {
+    return "";
+  }
+
+  return `
+    <div class="record-item">
+      <span class="record-item__label">${window.DivineChamber.escapeHtml(label)}</span>
+      <span class="record-item__value">${window.DivineChamber.escapeHtml(value)}</span>
     </div>
   `;
-  sourceLink.classList.add("disabled");
-  sourceLink.removeAttribute("href");
 }
 
-function renderRelated(entries, currentEntry) {
-  const related = entries.filter(
-    (entry) => entry.id !== currentEntry.id && entry.kind === currentEntry.kind
-  );
-
-  if (!related.length) {
-    relatedNode.innerHTML = `
-      <div class="related-card">
-        <p class="empty-state-copy mb-0">No related entries of this type yet.</p>
+function blockRow(label, values) {
+  return `
+    <div class="context-block">
+      <span class="context-block__label">${window.DivineChamber.escapeHtml(label)}</span>
+      <div class="chip-row chip-row--quiet">
+        ${values
+          .map((value) => `<span class="soft-chip">${window.DivineChamber.escapeHtml(value)}</span>`)
+          .join("")}
       </div>
-    `;
-    return;
-  }
-
-  relatedNode.innerHTML = related
-    .map(
-      (entry) => `
-        <article class="related-card">
-          <span class="entry-kind">${formatKind(entry.kind)}</span>
-          <h2 class="entry-title mt-3 mb-2">${escapeHtml(entry.title)}</h2>
-          <p class="entry-summary mb-3">${escapeHtml(entry.summary || "No summary provided yet.")}</p>
-          <a class="btn btn-outline-dark btn-sm" href="reader.html?id=${encodeURIComponent(entry.id)}">
-            Open
-          </a>
-        </article>
-      `
-    )
-    .join("");
+    </div>
+  `;
 }
 
-function renderMarkdown(markdown) {
-  const cleaned = stripFrontMatter(markdown).replace(/\r\n/g, "\n");
-  const lines = cleaned.split("\n");
-  const html = [];
-  let paragraph = [];
-  let listType = null;
-
-  const flushParagraph = () => {
-    if (!paragraph.length) {
-      return;
-    }
-
-    html.push(`<p>${renderInline(paragraph.join(" "))}</p>`);
-    paragraph = [];
-  };
-
-  const closeList = () => {
-    if (!listType) {
-      return;
-    }
-
-    html.push(listType === "ul" ? "</ul>" : "</ol>");
-    listType = null;
-  };
-
-  lines.forEach((rawLine) => {
-    const line = rawLine.trim();
-
-    if (!line) {
-      flushParagraph();
-      closeList();
-      return;
-    }
-
-    const headingMatch = line.match(/^(#{1,4})\s+(.*)$/);
-    if (headingMatch) {
-      flushParagraph();
-      closeList();
-      const level = headingMatch[1].length;
-      html.push(`<h${level}>${renderInline(headingMatch[2])}</h${level}>`);
-      return;
-    }
-
-    if (/^---+$/.test(line) || /^\*\*\*+$/.test(line)) {
-      flushParagraph();
-      closeList();
-      html.push("<hr />");
-      return;
-    }
-
-    const blockquoteMatch = line.match(/^>\s?(.*)$/);
-    if (blockquoteMatch) {
-      flushParagraph();
-      closeList();
-      html.push(`<blockquote>${renderInline(blockquoteMatch[1])}</blockquote>`);
-      return;
-    }
-
-    const unorderedMatch = line.match(/^[-*]\s+(.*)$/);
-    if (unorderedMatch) {
-      flushParagraph();
-      if (listType !== "ul") {
-        closeList();
-        html.push("<ul>");
-        listType = "ul";
-      }
-      html.push(`<li>${renderInline(unorderedMatch[1])}</li>`);
-      return;
-    }
-
-    const orderedMatch = line.match(/^\d+\.\s+(.*)$/);
-    if (orderedMatch) {
-      flushParagraph();
-      if (listType !== "ol") {
-        closeList();
-        html.push("<ol>");
-        listType = "ol";
-      }
-      html.push(`<li>${renderInline(orderedMatch[1])}</li>`);
-      return;
-    }
-
-    closeList();
-    paragraph.push(line);
-  });
-
-  flushParagraph();
-  closeList();
-
-  return html.join("");
-}
-
-function stripFrontMatter(markdown) {
-  if (!markdown.startsWith("---\n")) {
-    return markdown;
+function navLink(entry, label) {
+  if (!entry) {
+    return `<span class="nav-pill nav-pill--empty">${label}: none</span>`;
   }
 
-  const endIndex = markdown.indexOf("\n---", 4);
-  if (endIndex === -1) {
-    return markdown;
-  }
-
-  return markdown.slice(endIndex + 4).trimStart();
-}
-
-function renderInline(text) {
-  const escaped = escapeHtml(text);
-  return escaped
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
-}
-
-function formatKind(kind) {
-  if (kind === "chapter") {
-    return "Chapter";
-  }
-
-  if (kind === "scene") {
-    return "Scene";
-  }
-
-  if (kind === "play") {
-    return "Play";
-  }
-
-  return "Entry";
-}
-
-function formatOrder(order) {
-  if (!order) {
-    return "Unordered";
-  }
-
-  return `#${String(order).padStart(2, "0")}`;
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+  return `
+    <a class="nav-pill" href="${window.DivineChamber.entryUrl(entry)}">
+      <span class="nav-pill__label">${label}</span>
+      <strong>${window.DivineChamber.escapeHtml(entry.title)}</strong>
+    </a>
+  `;
 }
