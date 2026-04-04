@@ -231,25 +231,38 @@ window.DivineChamber = (() => {
     return badges.join("");
   }
 
-  function renderCharacterChips(entry) {
+  function renderCharacterChips(entry, options = {}) {
     if (!entry.characters?.length) {
       return "";
     }
 
+    const maxCharacters = options.maxCharacters ?? 3;
+    const visibleCharacters = entry.characters.slice(0, maxCharacters);
+    const hiddenCount = entry.characters.length - visibleCharacters.length;
+
     return `
       <div class="chip-row chip-row--quiet">
-        ${entry.characters
+        ${visibleCharacters
           .map((character) => `<span class="soft-chip">${escapeHtml(character)}</span>`)
           .join("")}
+        ${
+          hiddenCount > 0
+            ? `<span class="soft-chip">+${hiddenCount} more</span>`
+            : ""
+        }
       </div>
     `;
   }
 
   function renderEntryCard(entry, options = {}) {
-    const buttonLabel = options.buttonLabel || "Open File";
+    const buttonLabel = options.buttonLabel || "Open file";
     const eyebrow = options.eyebrow || "";
+    const showStatus = options.showStatus ?? false;
     const metaLine = [];
 
+    if (entry.status && !showStatus && !["canon", "final"].includes(entry.status)) {
+      metaLine.push(`<span>${escapeHtml(formatStatus(entry.status))}</span>`);
+    }
     if (entry.case_name) {
       metaLine.push(`<span>${escapeHtml(entry.case_name)}</span>`);
     }
@@ -266,13 +279,17 @@ window.DivineChamber = (() => {
       )}">
         <div class="archive-card__meta">
           <div class="chip-row">
-            ${renderBadges(entry, options)}
+            ${renderBadges(entry, {
+              showType: options.showType,
+              showFacet: options.showFacet,
+              showStatus,
+            })}
           </div>
           ${eyebrow ? `<p class="archive-card__eyebrow">${escapeHtml(eyebrow)}</p>` : ""}
         </div>
         <h2 class="archive-card__title">${escapeHtml(entry.title)}</h2>
         <p class="archive-card__summary">${escapeHtml(entry.summary || "No summary provided yet.")}</p>
-        ${renderCharacterChips(entry)}
+        ${renderCharacterChips(entry, { maxCharacters: options.maxCharacterChips })}
         ${
           metaLine.length
             ? `<div class="archive-card__line">${metaLine.join("<span class=\"divider-dot\"></span>")}</div>`

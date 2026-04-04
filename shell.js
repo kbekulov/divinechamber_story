@@ -10,25 +10,45 @@ const DC_SHELL = (() => {
     { key: "notes", label: "Notes & Logs", href: "notes.html" },
   ];
 
+  const pageByKey = Object.fromEntries(pages.map((page) => [page.key, page]));
+
+  const navGroups = [
+    { label: "Orientation", keys: ["overview", "about"] },
+    { label: "Browse", keys: ["cast", "cases", "archive"] },
+    { label: "Reference", keys: ["world", "timeline", "notes"] },
+  ];
+
+  const contextualLinks = {
+    overview: ["about", "cast", "archive"],
+    about: ["cases", "world", "archive"],
+    cast: ["cases", "archive", "timeline"],
+    cases: ["cast", "archive", "world"],
+    archive: ["about", "cases", "cast"],
+    world: ["archive", "timeline", "cases"],
+    timeline: ["archive", "cases", "notes"],
+    notes: ["archive", "timeline", "about"],
+    reader: ["archive", "cases", "cast"],
+  };
+
   const notes = {
     overview:
-      "The archive is organized to preserve both faces of the project: interior chamber drama and exterior bureau procedure.",
+      "Start with the premise, then choose whether to enter through character pressure, bureau incidents, or the archive itself.",
     about:
-      "Use this page to frame tone, premise, themes, and the chamber-bureau split before a reader enters the files themselves.",
+      "This page frames tone and structure. It should orient a new reader before they step into individual files.",
     cast:
-      "Cast records read as interpretive dossiers rather than generic fantasy bios. Each presence should feel alive, dangerous, and dramatically precise.",
+      "Cast records work best when they feel legible at a glance and layered on a slower read.",
     cases:
-      "Cases belong to the bureau, but the chamber keeps altering what the bureau thinks a case is.",
+      "Cases are the bureau-facing spine of the archive: incidents first, then the files that orbit them.",
     archive:
-      "Browse across files intentionally: by type, facet, character, case, and status rather than a flat chronological dump.",
+      "The archive should reward intentional browsing, not force a reader to decode the whole system at once.",
     world:
-      "World entries keep the city, Crown, bureau, and symbolic systems readable without draining them of atmosphere.",
+      "Reference pages keep the setting coherent without draining the project of atmosphere or dramatic ambiguity.",
     timeline:
-      "Chronology is a working archive tool. It should reveal pressure, escalation, and recurrence without pretending the project is mechanically closed.",
+      "Chronology should clarify pressure and progression, not turn the archive into a rigid production spreadsheet.",
     notes:
-      "Notes and dev logs remain part of the project’s living archive, but they are clearly separated from canon-facing material.",
+      "Development material stays accessible, but it should remain clearly distinct from canon-facing reading paths.",
     reader:
-      "Reader mode treats each file as a real archive object, with context, relations, and room for long-form prose.",
+      "Reader mode should feel calm, readable, and well-connected to the rest of the archive.",
   };
 
   const body = document.body;
@@ -37,15 +57,51 @@ const DC_SHELL = (() => {
   const sidebarRoot = document.getElementById("sidebar-shell");
   const mobileRoot = document.getElementById("mobile-shell");
 
-  function navMarkup() {
-    return pages
-      .map((page) => {
-        const isActive = page.key === activeKey;
+  function renderNavGroups() {
+    return navGroups
+      .map(
+        (group) => `
+          <div class="site-nav-group">
+            <p class="sidebar-section-label">${group.label}</p>
+            <nav class="nav flex-column site-nav">
+              ${group.keys
+                .map((key) => {
+                  const page = pageByKey[key];
+                  if (!page) {
+                    return "";
+                  }
+
+                  const isActive = page.key === activeKey;
+                  return `
+                    <a class="nav-link${isActive ? " active" : ""}" ${
+                      isActive ? 'aria-current="page"' : ""
+                    } href="${page.href}">
+                      ${page.label}
+                    </a>
+                  `;
+                })
+                .join("")}
+            </nav>
+          </div>
+        `
+      )
+      .join("");
+  }
+
+  function renderContextLinks() {
+    const keys = contextualLinks[currentKey] || contextualLinks.overview;
+
+    return keys
+      .map((key) => {
+        const page = pageByKey[key];
+        if (!page) {
+          return "";
+        }
+
         return `
-          <a class="nav-link${isActive ? " active" : ""}" ${
-            isActive ? 'aria-current="page"' : ""
-          } href="${page.href}">
-            ${page.label}
+          <a class="sidebar-mini-link" href="${page.href}">
+            <span class="sidebar-mini-link__title">${page.label}</span>
+            <span class="sidebar-mini-link__copy">Open ${page.label.toLowerCase()}.</span>
           </a>
         `;
       })
@@ -62,28 +118,25 @@ const DC_SHELL = (() => {
         <div class="sidebar-top">
           <p class="sidebar-kicker mb-2">Private Bureau Archive</p>
           <a class="sidebar-brand" href="index.html">Divine Chamber</a>
-          <p class="sidebar-copy mt-3 mb-4">
-            An author archive for chamber drama, symbolic pressure, and city-level investigations.
+          <p class="sidebar-copy mt-3 mb-0">
+            An author archive for chamber drama, bureau investigation, symbolic pressure, and long-form story writing.
           </p>
         </div>
 
-        <div class="sidebar-facet-card">
-          <p class="card-kicker">Dual Facet</p>
-          <div class="facet-mini-grid">
-            <div>
-              <strong>Chamber</strong>
-              <span>Theatrical, intimate, archetypal, dangerous.</span>
-            </div>
-            <div>
-              <strong>Bureau</strong>
-              <span>Investigative, political, procedural, urban.</span>
-            </div>
-          </div>
+        <div class="sidebar-divider"></div>
+
+        <div class="site-nav-shell">
+          ${renderNavGroups()}
         </div>
 
-        <nav class="nav flex-column site-nav mt-4">
-          ${navMarkup()}
-        </nav>
+        <div class="sidebar-divider"></div>
+
+        <div class="sidebar-utility">
+          <p class="sidebar-section-label">Go Next</p>
+          <div class="sidebar-link-list">
+            ${renderContextLinks()}
+          </div>
+        </div>
 
         <div class="sidebar-note mt-auto">
           ${notes[currentKey] || notes.overview}
@@ -117,12 +170,19 @@ const DC_SHELL = (() => {
             <p class="drawer-kicker mb-1">Private Bureau Archive</p>
             <h2 class="drawer-title mb-0">Divine Chamber</h2>
           </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <nav class="nav flex-column site-nav">
-            ${navMarkup()}
-          </nav>
+          <div class="site-nav-shell">
+            ${renderNavGroups()}
+          </div>
+          <div class="sidebar-divider my-4"></div>
+          <div class="sidebar-utility">
+            <p class="sidebar-section-label">Go Next</p>
+            <div class="sidebar-link-list">
+              ${renderContextLinks()}
+            </div>
+          </div>
           <div class="sidebar-note mt-4">
             ${notes[currentKey] || notes.overview}
           </div>

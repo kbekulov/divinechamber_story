@@ -31,19 +31,20 @@ async function initializeHome() {
     </article>
   `;
 
+  const featuredPool = entries.filter((entry) => entry.featured);
   const featured = window.DivineChamber
-    .byChronology(entries.filter((entry) => entry.featured))
-    .slice(0, 4);
+    .byChronology(featuredPool.length ? featuredPool : literaryEntries)
+    .slice(0, 3);
 
   homeFeatured.innerHTML = featured
     .map((entry) =>
       window.DivineChamber.renderEntryCard(entry, {
-        buttonLabel: "Open File",
+        buttonLabel: "Read file",
       })
     )
     .join("");
 
-  const recent = [...window.DivineChamber.byChronology(entries)].reverse().slice(0, 5);
+  const recent = [...window.DivineChamber.byChronology(entries)].reverse().slice(0, 4);
   homeRecent.innerHTML = recent
     .map(
       (entry) => `

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,30 +37,65 @@
             </section>
 
             <section class="page-section mt-4">
-              <div class="filter-cluster">
-                <div class="filter-row" id="archive-facet-filters"></div>
-                <div class="row g-3 mt-1">
-                  <div class="col-md-6 col-xl-3">
-                    <label class="form-label archive-label" for="archive-type">Type</label>
-                    <select class="form-select archive-select" id="archive-type"></select>
+              <div class="archive-layout">
+                <aside class="archive-sidebar">
+                  <div class="paper-panel archive-side-panel">
+                    <p class="card-kicker">Quick Views</p>
+                    <h2 class="subsection-title archive-side-title">Common routes through the files</h2>
+                    <div class="route-list route-list--compact" id="archive-quick-links"></div>
                   </div>
-                  <div class="col-md-6 col-xl-3">
-                    <label class="form-label archive-label" for="archive-status">Status</label>
-                    <select class="form-select archive-select" id="archive-status"></select>
+                </aside>
+
+                <div class="archive-main">
+                  <div class="paper-panel archive-filter-panel">
+                    <div class="filter-toolbar">
+                      <div>
+                        <p class="card-kicker mb-2">Find a File</p>
+                        <h2 class="subsection-title mb-0">Filter the archive with intention</h2>
+                      </div>
+                      <button class="btn btn-outline-light btn-sm" type="button" id="archive-reset">
+                        Clear filters
+                      </button>
+                    </div>
+
+                    <div class="filter-cluster mt-4">
+                      <div class="filter-row" id="archive-facet-filters"></div>
+                      <div class="row g-3 mt-1">
+                        <div class="col-lg-6">
+                          <label class="form-label archive-label" for="archive-search">Search</label>
+                          <input
+                            class="form-control archive-input"
+                            id="archive-search"
+                            type="search"
+                            placeholder="Title, summary, tag, character, case"
+                          />
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                          <label class="form-label archive-label" for="archive-type">Type</label>
+                          <select class="form-select archive-select" id="archive-type"></select>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                          <label class="form-label archive-label" for="archive-status">Status</label>
+                          <select class="form-select archive-select" id="archive-status"></select>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                          <label class="form-label archive-label" for="archive-character">Character</label>
+                          <select class="form-select archive-select" id="archive-character"></select>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                          <label class="form-label archive-label" for="archive-case">Case</label>
+                          <select class="form-select archive-select" id="archive-case"></select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="archive-active mt-4" id="archive-active"></div>
+                    <div class="archive-result-line mt-3" id="archive-count"></div>
                   </div>
-                  <div class="col-md-6 col-xl-3">
-                    <label class="form-label archive-label" for="archive-character">Character</label>
-                    <select class="form-select archive-select" id="archive-character"></select>
-                  </div>
-                  <div class="col-md-6 col-xl-3">
-                    <label class="form-label archive-label" for="archive-case">Case</label>
-                    <select class="form-select archive-select" id="archive-case"></select>
-                  </div>
+
+                  <div class="entry-grid mt-4" id="library-list" aria-live="polite"></div>
                 </div>
               </div>
-
-              <div class="archive-result-line mt-4" id="archive-count"></div>
-              <div class="entry-grid mt-3" id="library-list" aria-live="polite"></div>
             </section>
           </div>
         </main>
