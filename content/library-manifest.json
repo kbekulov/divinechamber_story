@@ -1,0 +1,31 @@
+{
+  "entries": [
+    {
+      "id": "chapter-chapter-01-the-threshold",
+      "title": "Chapter I - The Threshold",
+      "kind": "chapter",
+      "status": "Draft",
+      "summary": "Kael returns to the sealed chamber and discovers it has begun responding to memory like a living witness.",
+      "order": 1,
+      "path": "content/chapters/chapter-01-the-threshold.md"
+    },
+    {
+      "id": "scene-scene-01-an-audience-of-stone",
+      "title": "Scene I - An Audience of Stone",
+      "kind": "scene",
+      "status": "Draft",
+      "summary": "Seris confronts Kael inside the chamber, forcing the first ideological clash over what the place is for.",
+      "order": 1,
+      "path": "content/scenes/scene-01-an-audience-of-stone.md"
+    },
+    {
+      "id": "play-play-01-the-litany-of-glass",
+      "title": "Play I - The Litany of Glass",
+      "kind": "play",
+      "status": "In Progress",
+      "summary": "Mira stages a ritualized retelling that begins echoing future events, blurring rehearsal and prophecy.",
+      "order": 1,
+      "path": "content/plays/play-01-the-litany-of-glass.md"
+    }
+  ]
+}

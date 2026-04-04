@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divine Chamber</title>
+    <meta
+      name="description"
+      content="A story hub for Divine Chamber featuring characters, narrative pillars, and a browsable library of chapters, scenes, and plays."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero" id="top">
+        <nav class="topbar">
+          <a class="brand" href="#top">Divine Chamber</a>
+          <div class="topbar-links">
+            <a href="#characters">Characters</a>
+            <a href="#narrative">Narrative</a>
+            <a href="#library">Story Library</a>
+          </div>
+        </nav>
+
+        <div class="hero-copy">
+          <p class="eyebrow">Story Project Hub</p>
+          <h1>Build the myth, track the cast, and keep every scene within reach.</h1>
+          <p class="hero-text">
+            Divine Chamber now has a dedicated home for story architecture: character
+            profiles, narrative pillars, and a living archive of chapters, scenes, and
+            plays written in Markdown.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#library">Explore The Library</a>
+            <a class="button button-secondary" href="#narrative">Read The Premise</a>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <p class="panel-label">Project Focus</p>
+          <ul class="focus-list">
+            <li>Character motivations and fractures</li>
+            <li>Story themes, world logic, and dramatic stakes</li>
+            <li>Markdown-based archive for chapters, scenes, and plays</li>
+          </ul>
+        </div>
+      </header>
+
+      <main>
+        <section class="section" id="characters">
+          <div class="section-heading">
+            <p class="eyebrow">Character Section</p>
+            <h2>The people drawn toward the chamber</h2>
+            <p>
+              Use this area as the cast board for the project. It can evolve as your
+              world grows, but it already gives Divine Chamber a strong dramatic center.
+            </p>
+          </div>
+
+          <div class="character-grid">
+            <article class="character-card">
+              <p class="card-kicker">Protagonist</p>
+              <h3>Kael Voren</h3>
+              <p>
+                A scholar-turned-witness who believes the chamber preserves truth, even
+                when truth arrives as ruin.
+              </p>
+              <ul>
+                <li>Want: To uncover why the chamber has awakened</li>
+                <li>Fear: That revelation will erase the life he built outside it</li>
+                <li>Conflict: Knowledge keeps making him less certain, not more</li>
+              </ul>
+            </article>
+
+            <article class="character-card">
+              <p class="card-kicker">Counterforce</p>
+              <h3>Seris Vale</h3>
+              <p>
+                A disciplined archivist who treats emotion like contamination and the
+                chamber like a weapon that must remain sealed.
+              </p>
+              <ul>
+                <li>Want: To preserve order at any cost</li>
+                <li>Fear: That memory can be rewritten, not merely remembered</li>
+                <li>Conflict: Control keeps pushing her toward betrayal</li>
+              </ul>
+            </article>
+
+            <article class="character-card">
+              <p class="card-kicker">Catalyst</p>
+              <h3>Mira Ash</h3>
+              <p>
+                A performer whose staged retellings begin echoing events before they
+                happen, as if the chamber speaks through rehearsal.
+              </p>
+              <ul>
+                <li>Want: To turn vision into meaning before others exploit it</li>
+                <li>Fear: That she is becoming a vessel rather than an author</li>
+                <li>Conflict: Every performance reveals more than she intends</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="narrative">
+          <div class="section-heading">
+            <p class="eyebrow">Narrative Section</p>
+            <h2>The dramatic spine of Divine Chamber</h2>
+            <p>
+              This section frames the project at a glance, so you can keep tone, themes,
+              and movement aligned while new material is added.
+            </p>
+          </div>
+
+          <div class="narrative-grid">
+            <article class="narrative-card">
+              <h3>Premise</h3>
+              <p>
+                Beneath a fractured city lies a chamber that records not what happened,
+                but what people were willing to call true. When it opens, memory becomes
+                unstable and history turns adversarial.
+              </p>
+            </article>
+
+            <article class="narrative-card">
+              <h3>Themes</h3>
+              <p>
+                Memory versus invention, devotion versus control, and the danger of
+                treating narrative as proof rather than perspective.
+              </p>
+            </article>
+
+            <article class="narrative-card">
+              <h3>Tone</h3>
+              <p>
+                Sacred, theatrical, intimate, and uneasy. The world should feel like a
+                ritual that might become a trial at any moment.
+              </p>
+            </article>
+          </div>
+
+          <div class="narrative-track">
+            <div class="track-step">
+              <span>01</span>
+              <h3>Awakening</h3>
+              <p>The chamber begins to respond, and private memories become public risk.</p>
+            </div>
+            <div class="track-step">
+              <span>02</span>
+              <h3>Distortion</h3>
+              <p>Accounts diverge, loyalties fracture, and performance starts steering fate.</p>
+            </div>
+            <div class="track-step">
+              <span>03</span>
+              <h3>Reckoning</h3>
+              <p>The cast must decide whether truth should be preserved, revised, or buried.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section library-section" id="library">
+          <div class="section-heading">
+            <p class="eyebrow">Story Library</p>
+            <h2>Browse chapters, scenes, and plays from Markdown</h2>
+            <p>
+              The library reads from the folders in <code>content/</code>. Add new
+              Markdown files, rebuild the manifest, and they will appear here.
+            </p>
+          </div>
+
+          <div class="library-controls">
+            <div class="filter-group" role="tablist" aria-label="Filter story entries">
+              <button class="filter-button is-active" data-filter="all" type="button">All</button>
+              <button class="filter-button" data-filter="chapter" type="button">Chapters</button>
+              <button class="filter-button" data-filter="scene" type="button">Scenes</button>
+              <button class="filter-button" data-filter="play" type="button">Plays</button>
+            </div>
+            <p class="library-hint">
+              Update the manifest with <code>python3 scripts/build_library_manifest.py</code>
+            </p>
+          </div>
+
+          <div class="library-layout">
+            <div class="library-list" id="library-list" aria-live="polite"></div>
+
+            <article class="library-preview" id="library-preview">
+              <div class="preview-empty">
+                <p class="preview-label">Awaiting Selection</p>
+                <h3>Pick an entry from the library</h3>
+                <p>
+                  A rendered preview of the selected Markdown file will appear here,
+                  along with direct access to the source document.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
