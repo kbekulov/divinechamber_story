@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Characters | Divine Chamber</title>
+    <meta
+      name="description"
+      content="Character page for Divine Chamber with a roster and detailed character dossiers."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="mobile-topbar d-lg-none">
+      <button
+        class="btn btn-outline-dark btn-sm"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileNav"
+        aria-controls="mobileNav"
+      >
+        Menu
+      </button>
+      <a class="mobile-brand" href="index.html">Divine Chamber</a>
+    </div>
+
+    <div class="offcanvas offcanvas-start mobile-drawer d-lg-none" tabindex="-1" id="mobileNav">
+      <div class="offcanvas-header border-bottom">
+        <div>
+          <p class="drawer-kicker mb-1">Story Hub</p>
+          <h2 class="drawer-title mb-0">Divine Chamber</h2>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column site-nav">
+          <a class="nav-link" href="index.html">Overview</a>
+          <a class="nav-link active" aria-current="page" href="characters.html">Characters</a>
+          <a class="nav-link" href="narrative.html">Narrative</a>
+          <a class="nav-link" href="library.html">Library</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container-fluid px-0 site-shell">
+      <div class="row g-0">
+        <aside class="col-lg-3 col-xl-2 d-none d-lg-block sidebar-column">
+          <div class="sidebar-panel">
+            <p class="sidebar-kicker mb-2">Story Hub</p>
+            <a class="sidebar-brand" href="index.html">Divine Chamber</a>
+            <p class="sidebar-copy mt-3 mb-4">
+              A quiet archive for characters, structure, and every written fragment of the project.
+            </p>
+
+            <nav class="nav flex-column site-nav">
+              <a class="nav-link" href="index.html">Overview</a>
+              <a class="nav-link active" aria-current="page" href="characters.html">Characters</a>
+              <a class="nav-link" href="narrative.html">Narrative</a>
+              <a class="nav-link" href="library.html">Library</a>
+            </nav>
+
+            <div class="sidebar-note mt-auto">
+              Select a roster tile to switch the current dossier, inspired by the illustrated reference layout.
+            </div>
+          </div>
+        </aside>
+
+        <main class="col-lg-9 col-xl-10 content-column">
+          <div class="content-wrap">
+            <section class="page-banner text-center">
+              <p class="page-kicker">Character</p>
+              <h1 class="page-title banner-title">Character Ledger</h1>
+            </section>
+
+            <section class="frame-panel mt-4">
+              <div class="character-strip" id="character-strip" aria-label="Character roster"></div>
+
+              <div class="row g-4 align-items-center mt-1">
+                <div class="col-xl-5">
+                  <div class="character-portrait" id="character-portrait">
+                    <div class="portrait-glyph" id="character-glyph">KV</div>
+                    <p class="portrait-role mb-0" id="character-role">Protagonist</p>
+                  </div>
+                </div>
+
+                <div class="col-xl-7">
+                  <div class="character-copy-panel">
+                    <p class="card-kicker mb-3" id="character-kicker">Witness</p>
+                    <h2 class="section-card-title mb-2" id="character-name">Kael Voren</h2>
+                    <p class="character-subtitle mb-4" id="character-subtitle">
+                      Scholar, witness, and reluctant interpreter of the chamber.
+                    </p>
+                    <p class="page-copy" id="character-description">
+                      Kael treats the chamber as an archive that can still be reasoned with,
+                      even after it begins responding like a living witness. His need to
+                      understand keeps dragging him toward truths that might not spare him.
+                    </p>
+                    <div class="note-grid" id="character-notes"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="characters.js" defer></script>
+  </body>
+</html>
