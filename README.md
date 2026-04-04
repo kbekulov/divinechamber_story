@@ -1,11 +1,17 @@
 # Divine Chamber Story Hub
 
-This repository contains a static site for the Divine Chamber story project. The site
-includes:
+This repository contains a Bootstrap-based static site for the Divine Chamber story
+project. The site includes:
 
 - a character section
 - a narrative section
 - a story library that renders chapters, scenes, and plays from Markdown files
+
+## Frontend stack
+
+- Bootstrap 5.3.8 via CDN
+- custom theme overrides in `styles.css`
+- plain JavaScript for the Markdown library browser
 
 ## Content structure
 

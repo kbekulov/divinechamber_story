@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,196 +8,302 @@
       name="description"
       content="A story hub for Divine Chamber featuring characters, narrative pillars, and a browsable library of chapters, scenes, and plays."
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="hero" id="top">
-        <nav class="topbar">
-          <a class="brand" href="#top">Divine Chamber</a>
-          <div class="topbar-links">
-            <a href="#characters">Characters</a>
-            <a href="#narrative">Narrative</a>
-            <a href="#library">Story Library</a>
-          </div>
-        </nav>
-
-        <div class="hero-copy">
-          <p class="eyebrow">Story Project Hub</p>
-          <h1>Build the myth, track the cast, and keep every scene within reach.</h1>
-          <p class="hero-text">
-            Divine Chamber now has a dedicated home for story architecture: character
-            profiles, narrative pillars, and a living archive of chapters, scenes, and
-            plays written in Markdown.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#library">Explore The Library</a>
-            <a class="button button-secondary" href="#narrative">Read The Premise</a>
+    <div class="page-shell py-3 py-lg-4">
+      <nav class="navbar navbar-expand-lg topbar px-3 px-lg-4">
+        <div class="container-fluid px-0">
+          <a class="navbar-brand brand" href="#top">Divine Chamber</a>
+          <button
+            class="navbar-toggler border-0 shadow-none px-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#site-nav"
+            aria-controls="site-nav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-lg-end" id="site-nav">
+            <div class="navbar-nav gap-lg-2">
+              <a class="nav-link" href="#characters">Characters</a>
+              <a class="nav-link" href="#narrative">Narrative</a>
+              <a class="nav-link" href="#library">Story Library</a>
+            </div>
           </div>
         </div>
+      </nav>
 
-        <div class="hero-panel">
-          <p class="panel-label">Project Focus</p>
-          <ul class="focus-list">
-            <li>Character motivations and fractures</li>
-            <li>Story themes, world logic, and dramatic stakes</li>
-            <li>Markdown-based archive for chapters, scenes, and plays</li>
-          </ul>
+      <header class="section-panel hero-shell mt-3 mt-lg-4" id="top">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-xl-8">
+            <div class="hero-copy h-100 d-flex flex-column justify-content-center">
+              <span class="section-tag">Story Project Hub</span>
+              <h1 class="hero-title mt-4">
+                Build the myth, track the cast, and keep every scene within reach.
+              </h1>
+              <p class="lead hero-text mt-4 mb-0">
+                Divine Chamber now has a dedicated home for story architecture:
+                character profiles, narrative pillars, and a living archive of
+                chapters, scenes, and plays written in Markdown.
+              </p>
+              <div class="d-flex flex-wrap gap-3 mt-4 pt-lg-2">
+                <a class="btn btn-primary btn-lg px-4" href="#library">Explore The Library</a>
+                <a class="btn btn-outline-light btn-lg px-4" href="#narrative">Read The Premise</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4">
+            <div class="card focus-card h-100 border-0">
+              <div class="card-body p-4 p-lg-5">
+                <span class="section-tag">Project Focus</span>
+                <h2 class="h3 mt-4 mb-4 serif-heading">
+                  What this hub keeps in one place
+                </h2>
+                <div class="vstack gap-3">
+                  <div class="focus-item">
+                    <span class="focus-index">01</span>
+                    <p class="mb-0">Character motivations and fractures</p>
+                  </div>
+                  <div class="focus-item">
+                    <span class="focus-index">02</span>
+                    <p class="mb-0">Story themes, world logic, and dramatic stakes</p>
+                  </div>
+                  <div class="focus-item">
+                    <span class="focus-index">03</span>
+                    <p class="mb-0">Markdown-based archive for chapters, scenes, and plays</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      <main>
-        <section class="section" id="characters">
+      <main class="mt-3 mt-lg-4">
+        <section class="section-panel" id="characters">
           <div class="section-heading">
-            <p class="eyebrow">Character Section</p>
-            <h2>The people drawn toward the chamber</h2>
-            <p>
+            <span class="section-tag">Character Section</span>
+            <h2 class="section-title mt-4">The people drawn toward the chamber</h2>
+            <p class="section-copy mt-3 mb-0">
               Use this area as the cast board for the project. It can evolve as your
               world grows, but it already gives Divine Chamber a strong dramatic center.
             </p>
           </div>
 
-          <div class="character-grid">
-            <article class="character-card">
-              <p class="card-kicker">Protagonist</p>
-              <h3>Kael Voren</h3>
-              <p>
-                A scholar-turned-witness who believes the chamber preserves truth, even
-                when truth arrives as ruin.
-              </p>
-              <ul>
-                <li>Want: To uncover why the chamber has awakened</li>
-                <li>Fear: That revelation will erase the life he built outside it</li>
-                <li>Conflict: Knowledge keeps making him less certain, not more</li>
-              </ul>
-            </article>
+          <div class="row row-cols-1 row-cols-xl-3 g-4 mt-1">
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <p class="card-kicker mb-3">Protagonist</p>
+                  <h3 class="card-title serif-heading">Kael Voren</h3>
+                  <p class="card-copy mb-4">
+                    A scholar-turned-witness who believes the chamber preserves truth,
+                    even when truth arrives as ruin.
+                  </p>
+                  <ul class="detail-list mb-0">
+                    <li>Want: To uncover why the chamber has awakened</li>
+                    <li>Fear: That revelation will erase the life he built outside it</li>
+                    <li>Conflict: Knowledge keeps making him less certain, not more</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
 
-            <article class="character-card">
-              <p class="card-kicker">Counterforce</p>
-              <h3>Seris Vale</h3>
-              <p>
-                A disciplined archivist who treats emotion like contamination and the
-                chamber like a weapon that must remain sealed.
-              </p>
-              <ul>
-                <li>Want: To preserve order at any cost</li>
-                <li>Fear: That memory can be rewritten, not merely remembered</li>
-                <li>Conflict: Control keeps pushing her toward betrayal</li>
-              </ul>
-            </article>
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <p class="card-kicker mb-3">Counterforce</p>
+                  <h3 class="card-title serif-heading">Seris Vale</h3>
+                  <p class="card-copy mb-4">
+                    A disciplined archivist who treats emotion like contamination and
+                    the chamber like a weapon that must remain sealed.
+                  </p>
+                  <ul class="detail-list mb-0">
+                    <li>Want: To preserve order at any cost</li>
+                    <li>Fear: That memory can be rewritten, not merely remembered</li>
+                    <li>Conflict: Control keeps pushing her toward betrayal</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
 
-            <article class="character-card">
-              <p class="card-kicker">Catalyst</p>
-              <h3>Mira Ash</h3>
-              <p>
-                A performer whose staged retellings begin echoing events before they
-                happen, as if the chamber speaks through rehearsal.
-              </p>
-              <ul>
-                <li>Want: To turn vision into meaning before others exploit it</li>
-                <li>Fear: That she is becoming a vessel rather than an author</li>
-                <li>Conflict: Every performance reveals more than she intends</li>
-              </ul>
-            </article>
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <p class="card-kicker mb-3">Catalyst</p>
+                  <h3 class="card-title serif-heading">Mira Ash</h3>
+                  <p class="card-copy mb-4">
+                    A performer whose staged retellings begin echoing events before
+                    they happen, as if the chamber speaks through rehearsal.
+                  </p>
+                  <ul class="detail-list mb-0">
+                    <li>Want: To turn vision into meaning before others exploit it</li>
+                    <li>Fear: That she is becoming a vessel rather than an author</li>
+                    <li>Conflict: Every performance reveals more than she intends</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section class="section" id="narrative">
+        <section class="section-panel mt-3 mt-lg-4" id="narrative">
           <div class="section-heading">
-            <p class="eyebrow">Narrative Section</p>
-            <h2>The dramatic spine of Divine Chamber</h2>
-            <p>
-              This section frames the project at a glance, so you can keep tone, themes,
-              and movement aligned while new material is added.
+            <span class="section-tag">Narrative Section</span>
+            <h2 class="section-title mt-4">The dramatic spine of Divine Chamber</h2>
+            <p class="section-copy mt-3 mb-0">
+              This section frames the project at a glance, so you can keep tone,
+              themes, and movement aligned while new material is added.
             </p>
           </div>
 
-          <div class="narrative-grid">
-            <article class="narrative-card">
-              <h3>Premise</h3>
-              <p>
-                Beneath a fractured city lies a chamber that records not what happened,
-                but what people were willing to call true. When it opens, memory becomes
-                unstable and history turns adversarial.
-              </p>
-            </article>
+          <div class="row row-cols-1 row-cols-lg-3 g-4 mt-1">
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <h3 class="card-title serif-heading">Premise</h3>
+                  <p class="card-copy mb-0">
+                    Beneath a fractured city lies a chamber that records not what
+                    happened, but what people were willing to call true. When it opens,
+                    memory becomes unstable and history turns adversarial.
+                  </p>
+                </div>
+              </article>
+            </div>
 
-            <article class="narrative-card">
-              <h3>Themes</h3>
-              <p>
-                Memory versus invention, devotion versus control, and the danger of
-                treating narrative as proof rather than perspective.
-              </p>
-            </article>
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <h3 class="card-title serif-heading">Themes</h3>
+                  <p class="card-copy mb-0">
+                    Memory versus invention, devotion versus control, and the danger of
+                    treating narrative as proof rather than perspective.
+                  </p>
+                </div>
+              </article>
+            </div>
 
-            <article class="narrative-card">
-              <h3>Tone</h3>
-              <p>
-                Sacred, theatrical, intimate, and uneasy. The world should feel like a
-                ritual that might become a trial at any moment.
-              </p>
-            </article>
+            <div class="col">
+              <article class="card story-card h-100 border-0">
+                <div class="card-body p-4">
+                  <h3 class="card-title serif-heading">Tone</h3>
+                  <p class="card-copy mb-0">
+                    Sacred, theatrical, intimate, and uneasy. The world should feel
+                    like a ritual that might become a trial at any moment.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
 
-          <div class="narrative-track">
-            <div class="track-step">
-              <span>01</span>
-              <h3>Awakening</h3>
-              <p>The chamber begins to respond, and private memories become public risk.</p>
+          <div class="row row-cols-1 row-cols-lg-3 g-4 mt-1">
+            <div class="col">
+              <article class="card step-card h-100 border-0">
+                <div class="card-body p-4">
+                  <span class="number-chip">01</span>
+                  <h3 class="card-title serif-heading mt-4">Awakening</h3>
+                  <p class="card-copy mb-0">
+                    The chamber begins to respond, and private memories become public risk.
+                  </p>
+                </div>
+              </article>
             </div>
-            <div class="track-step">
-              <span>02</span>
-              <h3>Distortion</h3>
-              <p>Accounts diverge, loyalties fracture, and performance starts steering fate.</p>
+
+            <div class="col">
+              <article class="card step-card h-100 border-0">
+                <div class="card-body p-4">
+                  <span class="number-chip">02</span>
+                  <h3 class="card-title serif-heading mt-4">Distortion</h3>
+                  <p class="card-copy mb-0">
+                    Accounts diverge, loyalties fracture, and performance starts
+                    steering fate.
+                  </p>
+                </div>
+              </article>
             </div>
-            <div class="track-step">
-              <span>03</span>
-              <h3>Reckoning</h3>
-              <p>The cast must decide whether truth should be preserved, revised, or buried.</p>
+
+            <div class="col">
+              <article class="card step-card h-100 border-0">
+                <div class="card-body p-4">
+                  <span class="number-chip">03</span>
+                  <h3 class="card-title serif-heading mt-4">Reckoning</h3>
+                  <p class="card-copy mb-0">
+                    The cast must decide whether truth should be preserved, revised, or buried.
+                  </p>
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
-        <section class="section library-section" id="library">
+        <section class="section-panel mt-3 mt-lg-4" id="library">
           <div class="section-heading">
-            <p class="eyebrow">Story Library</p>
-            <h2>Browse chapters, scenes, and plays from Markdown</h2>
-            <p>
+            <span class="section-tag">Story Library</span>
+            <h2 class="section-title mt-4">Browse chapters, scenes, and plays from Markdown</h2>
+            <p class="section-copy mt-3 mb-0">
               The library reads from the folders in <code>content/</code>. Add new
               Markdown files, rebuild the manifest, and they will appear here.
             </p>
           </div>
 
-          <div class="library-controls">
-            <div class="filter-group" role="tablist" aria-label="Filter story entries">
-              <button class="filter-button is-active" data-filter="all" type="button">All</button>
-              <button class="filter-button" data-filter="chapter" type="button">Chapters</button>
-              <button class="filter-button" data-filter="scene" type="button">Scenes</button>
-              <button class="filter-button" data-filter="play" type="button">Plays</button>
+          <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mt-4">
+            <div class="d-flex flex-wrap gap-2" role="tablist" aria-label="Filter story entries">
+              <button class="btn btn-outline-light rounded-pill filter-button active" data-filter="all" type="button">
+                All
+              </button>
+              <button class="btn btn-outline-light rounded-pill filter-button" data-filter="chapter" type="button">
+                Chapters
+              </button>
+              <button class="btn btn-outline-light rounded-pill filter-button" data-filter="scene" type="button">
+                Scenes
+              </button>
+              <button class="btn btn-outline-light rounded-pill filter-button" data-filter="play" type="button">
+                Plays
+              </button>
             </div>
-            <p class="library-hint">
-              Update the manifest with <code>python3 scripts/build_library_manifest.py</code>
+            <p class="section-copy small mb-0">
+              Update the manifest with
+              <code>python3 scripts/build_library_manifest.py</code>
             </p>
           </div>
 
-          <div class="library-layout">
-            <div class="library-list" id="library-list" aria-live="polite"></div>
+          <div class="row g-4 align-items-start mt-1">
+            <div class="col-lg-5">
+              <div class="vstack gap-3" id="library-list" aria-live="polite"></div>
+            </div>
 
-            <article class="library-preview" id="library-preview">
-              <div class="preview-empty">
-                <p class="preview-label">Awaiting Selection</p>
-                <h3>Pick an entry from the library</h3>
-                <p>
-                  A rendered preview of the selected Markdown file will appear here,
-                  along with direct access to the source document.
-                </p>
-              </div>
-            </article>
+            <div class="col-lg-7">
+              <article class="card preview-card border-0" id="library-preview">
+                <div class="card-body p-4 p-lg-5 preview-placeholder">
+                  <span class="section-tag">Awaiting Selection</span>
+                  <h3 class="serif-heading h2 mt-4">Pick an entry from the library</h3>
+                  <p class="section-copy mt-3 mb-0">
+                    A rendered preview of the selected Markdown file will appear here,
+                    along with direct access to the source document.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
       </main>
     </div>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
     <script src="app.js" defer></script>
   </body>
 </html>

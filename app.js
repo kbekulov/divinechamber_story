@@ -34,6 +34,7 @@ async function initialize() {
 
 function wireFilters() {
   filterButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", button.classList.contains("active") ? "true" : "false");
     button.addEventListener("click", () => {
       state.filter = button.dataset.filter || "all";
       const visibleEntries = getFilteredEntries();
@@ -43,7 +44,9 @@ function wireFilters() {
       }
 
       filterButtons.forEach((item) => {
-        item.classList.toggle("is-active", item === button);
+        const isActive = item === button;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-pressed", isActive ? "true" : "false");
       });
 
       renderLibrary();
@@ -65,9 +68,14 @@ function renderLibrary() {
 
   if (!entries.length) {
     libraryList.innerHTML = `
-      <div class="empty-state">
-        No entries match the current filter yet. Add Markdown files to the content
-        folders and rebuild the manifest.
+      <div class="card empty-state-card border-0 entry-surface">
+        <div class="card-body p-4">
+          <span class="section-tag">No Matches</span>
+          <p class="empty-state-copy mt-3 mb-0">
+            No entries match the current filter yet. Add Markdown files to the
+            content folders and rebuild the manifest.
+          </p>
+        </div>
       </div>
     `;
     return;
@@ -78,19 +86,26 @@ function renderLibrary() {
   entries.forEach((entry) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "library-entry";
+    button.className = "story-entry";
     button.classList.toggle("is-active", entry.id === state.activeId);
+    button.setAttribute("aria-label", `Preview ${entry.title}`);
     button.innerHTML = `
-      <div class="entry-meta">
-        <span class="pill">${formatKind(entry.kind)}</span>
-        <span class="pill">${entry.status || "Draft"}</span>
-      </div>
-      <h3>${escapeHtml(entry.title)}</h3>
-      <p>${escapeHtml(entry.summary || "No summary provided yet.")}</p>
-      <div class="entry-footer">
-        <span>${formatLocation(entry)}</span>
-        <span class="entry-link">Preview text</span>
-      </div>
+      <span class="entry-surface card border-0">
+        <span class="card-body d-block p-4">
+          <span class="d-flex flex-wrap gap-2 mb-3">
+            <span class="badge badge-tag">${formatKind(entry.kind)}</span>
+            <span class="badge badge-tag">${escapeHtml(entry.status || "Draft")}</span>
+          </span>
+          <span class="entry-title d-block">${escapeHtml(entry.title)}</span>
+          <span class="entry-summary d-block mt-3">
+            ${escapeHtml(entry.summary || "No summary provided yet.")}
+          </span>
+          <span class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-4 text-secondary small">
+            <span>${formatLocation(entry)}</span>
+            <span>Preview text</span>
+          </span>
+        </span>
+      </span>
     `;
     button.addEventListener("click", () => {
       state.activeId = entry.id;
@@ -106,20 +121,25 @@ async function renderPreview() {
 
   if (!entry) {
     previewPanel.innerHTML = `
-      <div class="preview-empty">
-        <p class="preview-label">Nothing Selected</p>
-        <h3>Select a library item</h3>
-        <p>Choose a chapter, scene, or play to render it here.</p>
+      <div class="card-body p-4 p-lg-5 preview-placeholder">
+        <span class="section-tag">Nothing Selected</span>
+        <h3 class="preview-title h2 mt-4">Select a library item</h3>
+        <p class="section-copy mt-3 mb-0">
+          Choose a chapter, scene, or play to render it here.
+        </p>
       </div>
     `;
     return;
   }
 
   previewPanel.innerHTML = `
-    <div class="preview-empty">
-      <p class="preview-label">Loading</p>
-      <h3>${escapeHtml(entry.title)}</h3>
-      <p>Pulling the Markdown source into the preview panel.</p>
+    <div class="card-body p-4 p-lg-5 preview-placeholder">
+      <span class="section-tag">Loading</span>
+      <h3 class="preview-title h2 mt-4">${escapeHtml(entry.title)}</h3>
+      <div class="d-flex align-items-center gap-3 mt-3 section-copy">
+        <div class="spinner-border spinner-border-sm text-warning" role="status" aria-hidden="true"></div>
+        <span>Pulling the Markdown source into the preview panel.</span>
+      </div>
     </div>
   `;
 
@@ -131,19 +151,26 @@ async function renderPreview() {
 
     const markdown = await response.text();
     previewPanel.innerHTML = `
-      <div class="preview-content">
-        <div class="preview-header">
-          <p class="preview-label">Rendered Preview</p>
-          <h3>${escapeHtml(entry.title)}</h3>
-        </div>
-        <div class="preview-meta">
-          <span class="pill">${formatKind(entry.kind)}</span>
-          <span class="pill">${entry.status || "Draft"}</span>
+      <div class="card-body p-4 p-lg-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+          <div>
+            <span class="section-tag">Rendered Preview</span>
+            <h3 class="preview-title h2 mt-4 mb-0">${escapeHtml(entry.title)}</h3>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge badge-tag">${formatKind(entry.kind)}</span>
+            <span class="badge badge-tag">${escapeHtml(entry.status || "Draft")}</span>
+          </div>
         </div>
         <div class="preview-body">${renderMarkdown(markdown)}</div>
-        <div class="preview-footer">
-          <span>${formatLocation(entry)}</span>
-          <a class="preview-link" href="${encodeURI(entry.path)}" target="_blank" rel="noreferrer">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mt-4 pt-2 border-top border-secondary-subtle">
+          <span class="text-secondary small">${formatLocation(entry)}</span>
+          <a
+            class="btn btn-outline-light btn-sm preview-link"
+            href="${encodeURI(entry.path)}"
+            target="_blank"
+            rel="noreferrer"
+          >
             Open source Markdown
           </a>
         </div>
@@ -151,10 +178,10 @@ async function renderPreview() {
     `;
   } catch (error) {
     previewPanel.innerHTML = `
-      <div class="preview-empty">
-        <p class="preview-label">Preview Error</p>
-        <h3>${escapeHtml(entry.title)}</h3>
-        <p>${escapeHtml(error.message)}</p>
+      <div class="card-body p-4 p-lg-5 preview-placeholder">
+        <span class="section-tag">Preview Error</span>
+        <h3 class="preview-title h2 mt-4">${escapeHtml(entry.title)}</h3>
+        <p class="section-copy mt-3 mb-0">${escapeHtml(error.message)}</p>
       </div>
     `;
   }
@@ -162,18 +189,23 @@ async function renderPreview() {
 
 function renderManifestError(error) {
   libraryList.innerHTML = `
-    <div class="empty-state">
-      The story manifest could not be loaded. Run
-      <code>python3 scripts/build_library_manifest.py</code> and serve the site with
-      <code>python3 -m http.server</code>.
+    <div class="card empty-state-card border-0 entry-surface">
+      <div class="card-body p-4">
+        <span class="section-tag">Manifest Missing</span>
+        <p class="empty-state-copy mt-3 mb-0">
+          The story manifest could not be loaded. Run
+          <code>python3 scripts/build_library_manifest.py</code> and serve the site
+          with <code>python3 -m http.server</code>.
+        </p>
+      </div>
     </div>
   `;
 
   previewPanel.innerHTML = `
-    <div class="preview-empty">
-      <p class="preview-label">Manifest Missing</p>
-      <h3>Story library is not ready yet</h3>
-      <p>${escapeHtml(error.message)}</p>
+    <div class="card-body p-4 p-lg-5 preview-placeholder">
+      <span class="section-tag">Story Library Offline</span>
+      <h3 class="preview-title h2 mt-4">Manifest missing or unavailable</h3>
+      <p class="section-copy mt-3 mb-0">${escapeHtml(error.message)}</p>
     </div>
   `;
 }
