@@ -131,9 +131,7 @@ code {
   color: var(--brass-strong);
 }
 
-.sidebar-brand,
 .mobile-brand,
-.drawer-brand,
 .drawer-title,
 .page-title,
 .section-title,
@@ -144,32 +142,6 @@ code {
 .timeline-item__title {
   font-family: var(--serif);
   line-height: 1.04;
-}
-
-.sidebar-brand {
-  display: inline-block;
-  max-width: 6ch;
-  margin-inline: auto;
-  color: var(--ink);
-  font-size: clamp(2.15rem, 2.65vw, 2.85rem);
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  text-align: center;
-  text-wrap: balance;
-  text-decoration: none;
-}
-
-.drawer-brand {
-  display: inline-block;
-  max-width: 6.5ch;
-  margin-inline: auto;
-  color: var(--ink);
-  font-size: 2rem;
-  line-height: 0.94;
-  letter-spacing: -0.03em;
-  text-align: center;
-  text-wrap: balance;
-  text-decoration: none;
 }
 
 .sidebar-copy,
@@ -313,10 +285,6 @@ code {
   margin-top: 1.65rem;
   color: var(--ink-soft);
   font-size: 0.88rem;
-}
-
-.drawer-brand {
-  margin-top: 0.15rem;
 }
 
 .content-column {
@@ -1351,8 +1319,4 @@ code {
     padding: 0.8rem 0.85rem;
   }
 
-  .sidebar-brand,
-  .drawer-brand {
-    max-width: none;
-  }
 }
