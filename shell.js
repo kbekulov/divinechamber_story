@@ -122,7 +122,7 @@ const DC_SHELL = (() => {
             <span class="visually-hidden">Divine Chamber</span>
           </a>
           <p class="sidebar-copy mt-3 mb-0">
-            An author archive for chamber drama, bureau investigation, symbolic pressure, and long-form story writing.
+            Chamber drama, bureau investigation, symbolic pressure, and long-form story files.
           </p>
         </div>
 
