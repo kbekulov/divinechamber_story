@@ -147,41 +147,29 @@ code {
 }
 
 .sidebar-brand {
-  display: inline-flex;
-  align-items: center;
-  max-width: min(100%, 13rem);
+  display: inline-block;
+  max-width: 6ch;
   margin-inline: auto;
+  color: var(--ink);
+  font-size: clamp(2.15rem, 2.65vw, 2.85rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-align: center;
+  text-wrap: balance;
   text-decoration: none;
 }
 
 .drawer-brand {
-  display: inline-flex;
-  align-items: center;
-  max-width: min(100%, 12rem);
+  display: inline-block;
+  max-width: 6.5ch;
   margin-inline: auto;
+  color: var(--ink);
+  font-size: 2rem;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-align: center;
+  text-wrap: balance;
   text-decoration: none;
-}
-
-.brand-logo {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: rgba(103, 118, 149, 0.92);
-  -webkit-mask: url("img/logo.png") center / contain no-repeat;
-  mask: url("img/logo.png") center / contain no-repeat;
-  filter:
-    drop-shadow(0 8px 16px rgba(63, 74, 98, 0.14))
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.42));
-  opacity: 0.96;
-}
-
-.brand-logo--sidebar {
-  width: clamp(8.8rem, 10.4vw, 11rem);
-}
-
-.brand-logo--drawer {
-  width: min(9.75rem, 58vw);
-  background-color: rgba(111, 128, 164, 0.94);
 }
 
 .sidebar-copy,
@@ -1363,7 +1351,8 @@ code {
     padding: 0.8rem 0.85rem;
   }
 
-  .brand-logo--sidebar {
-    width: min(12rem, 100%);
+  .sidebar-brand,
+  .drawer-brand {
+    max-width: none;
   }
 }

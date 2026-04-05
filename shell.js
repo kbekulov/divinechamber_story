@@ -118,8 +118,7 @@ const DC_SHELL = (() => {
         <div class="sidebar-top">
           <p class="sidebar-kicker mb-2">Private Bureau Archive</p>
           <a class="sidebar-brand" href="index.html" aria-label="Divine Chamber home">
-            <span class="brand-logo brand-logo--sidebar" aria-hidden="true"></span>
-            <span class="visually-hidden">Divine Chamber</span>
+            Divine Chamber
           </a>
           <p class="sidebar-copy mt-3 mb-0">
             Chamber drama, bureau investigation, symbolic pressure, and long-form story files.
@@ -172,8 +171,7 @@ const DC_SHELL = (() => {
           <div>
             <p class="drawer-kicker mb-1">Private Bureau Archive</p>
             <a class="drawer-brand" href="index.html" aria-label="Divine Chamber home">
-              <span class="brand-logo brand-logo--drawer" aria-hidden="true"></span>
-              <span class="visually-hidden">Divine Chamber</span>
+              Divine Chamber
             </a>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
