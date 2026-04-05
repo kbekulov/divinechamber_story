@@ -136,6 +136,7 @@ code {
 
 .sidebar-brand,
 .mobile-brand,
+.drawer-brand,
 .drawer-title,
 .page-title,
 .section-title,
@@ -149,9 +150,35 @@ code {
 }
 
 .sidebar-brand {
-  display: inline-block;
-  font-size: clamp(2rem, 2.6vw, 2.95rem);
+  display: inline-flex;
+  align-items: center;
+  max-width: min(100%, 15rem);
   text-decoration: none;
+}
+
+.drawer-brand {
+  display: inline-flex;
+  align-items: center;
+  max-width: min(100%, 12rem);
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 10px 18px rgba(50, 42, 20, 0.12))
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35));
+}
+
+.brand-logo--sidebar {
+  width: clamp(11.5rem, 14vw, 14.5rem);
+}
+
+.brand-logo--drawer {
+  width: min(11rem, 65vw);
 }
 
 .sidebar-copy,
@@ -292,6 +319,10 @@ code {
   margin-top: 2rem;
   color: var(--ink-soft);
   font-size: 0.93rem;
+}
+
+.drawer-brand {
+  margin-top: 0.15rem;
 }
 
 .content-column {
@@ -1312,5 +1343,9 @@ code {
   .route-link,
   .sidebar-mini-link {
     padding: 0.8rem 0.85rem;
+  }
+
+  .brand-logo--sidebar {
+    width: min(12rem, 100%);
   }
 }
