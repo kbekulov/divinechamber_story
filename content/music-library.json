@@ -11,7 +11,7 @@
     {
       "id": "featured-cue",
       "title": "Featured Cue",
-      "youtube": "",
+      "youtube": "https://www.youtube.com/watch?v=yarhr49YF-I",
       "facet": "chamber",
       "collection": "Featured",
       "mood": "Threshold, nocturne, first impression",
@@ -23,7 +23,7 @@
     {
       "id": "chamber-cue",
       "title": "Chamber Cue",
-      "youtube": "",
+      "youtube": "https://www.youtube.com/watch?v=izjfLw8Knls",
       "facet": "chamber",
       "collection": "From the Chamber",
       "mood": "Theatrical, intimate, archetypal pressure",
@@ -35,7 +35,7 @@
     {
       "id": "bureau-cue",
       "title": "Bureau Cue",
-      "youtube": "",
+      "youtube": "https://www.youtube.com/watch?v=EfL7LL9-uWs",
       "facet": "bureau",
       "collection": "From the Bureau",
       "mood": "Procedure, pursuit, city pressure",
@@ -47,7 +47,7 @@
     {
       "id": "city-pressure-motif",
       "title": "City Pressure Motif",
-      "youtube": "",
+      "youtube": "https://www.youtube.com/watch?v=gXaoN0jwdUc",
       "facet": "bureau",
       "collection": "Motifs & Interludes",
       "mood": "Municipal unease, distant bells, weather",
