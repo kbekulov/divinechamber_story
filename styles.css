@@ -150,6 +150,7 @@ code {
   display: inline-flex;
   align-items: center;
   max-width: min(100%, 13rem);
+  margin-inline: auto;
   text-decoration: none;
 }
 
@@ -157,6 +158,7 @@ code {
   display: inline-flex;
   align-items: center;
   max-width: min(100%, 12rem);
+  margin-inline: auto;
   text-decoration: none;
 }
 
