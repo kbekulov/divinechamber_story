@@ -4,6 +4,7 @@ const DC_SHELL = (() => {
     { key: "about", label: "About Divine Chamber", href: "narrative.html" },
     { key: "cast", label: "Chamber Cast", href: "characters.html" },
     { key: "cases", label: "Bureau Cases", href: "cases.html" },
+    { key: "music", label: "Music Room", href: "music.html" },
     { key: "archive", label: "Archive", href: "library.html" },
     { key: "world", label: "World & Systems", href: "world.html" },
     { key: "timeline", label: "Timeline", href: "timeline.html" },
@@ -14,19 +15,20 @@ const DC_SHELL = (() => {
 
   const navGroups = [
     { label: "Orientation", keys: ["overview", "about"] },
-    { label: "Browse", keys: ["cast", "cases", "archive"] },
+    { label: "Browse", keys: ["cast", "cases", "music", "archive"] },
     { label: "Reference", keys: ["world", "timeline", "notes"] },
   ];
 
   const contextualLinks = {
-    overview: ["about", "cast", "archive"],
-    about: ["cases", "world", "archive"],
-    cast: ["cases", "archive", "timeline"],
-    cases: ["cast", "archive", "world"],
-    archive: ["about", "cases", "cast"],
-    world: ["archive", "timeline", "cases"],
-    timeline: ["archive", "cases", "notes"],
-    notes: ["archive", "timeline", "about"],
+    overview: ["about", "music", "archive"],
+    about: ["cases", "music", "world"],
+    cast: ["music", "cases", "archive"],
+    cases: ["music", "archive", "world"],
+    music: ["about", "cases", "archive"],
+    archive: ["music", "cases", "cast"],
+    world: ["archive", "timeline", "music"],
+    timeline: ["archive", "music", "notes"],
+    notes: ["archive", "timeline", "music"],
     reader: ["archive", "cases", "cast"],
   };
 
@@ -39,6 +41,8 @@ const DC_SHELL = (() => {
       "Cast records work best when they feel legible at a glance and layered on a slower read.",
     cases:
       "Cases are the bureau-facing spine of the archive: incidents first, then the files that orbit them.",
+    music:
+      "Music works best here as a listening room: one active player, curated shelves, and cues that support the chamber-bureau atmosphere without turning the page into a media dump.",
     archive:
       "The archive should reward intentional browsing, not force a reader to decode the whole system at once.",
     world:

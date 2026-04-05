@@ -19,6 +19,8 @@ presenting it through a multi-page archive structure instead of a generic blog.
   Chamber cast and bureau presences rendered from Markdown dossiers
 - `cases.html`:
   Bureau cases and linked archive materials
+- `music.html`:
+  Curated listening room for YouTube-hosted project tracks
 - `library.html`:
   Full archive browser with metadata filters
 - `world.html`:
@@ -36,7 +38,7 @@ presenting it through a multi-page archive structure instead of a generic blog.
 - custom archive styling in `styles.css`
 - shared navigation shell in `shell.js`
 - shared archive helpers in `archive-core.js`
-- page-specific scripts for home, cast, cases, world, timeline, notes, archive, and reader views
+- page-specific scripts for home, cast, cases, music, world, timeline, notes, archive, and reader views
 
 ## Content model
 
@@ -50,6 +52,7 @@ Current content folders:
 - `content/plays`
 - `content/cases`
 - `content/dossiers`
+- `content/music-library.json`
 - `content/world`
 - `content/notes`
 - `content/themes`
@@ -99,6 +102,28 @@ Recommended fields:
 Optional entry-specific fields such as `sigil`, `role`, `affiliation`, `archetype`,
 `case_code`, `priority`, `location`, or `category` are also passed into the manifest
 and can be used by page templates.
+
+## Music library
+
+YouTube-backed music data lives in `content/music-library.json`.
+
+Supported track fields:
+
+- `id`
+- `title`
+- `youtube`
+  accepts either a full YouTube URL or a bare video ID
+- `facet`
+  `chamber`, `bureau`, `world`, or `meta`
+- `collection`
+- `mood`
+- `reading`
+- `summary`
+- `note`
+- `order`
+
+The music page uses one featured player and quieter shelf cards instead of embedding
+every video at once.
 
 ## Update the archive
 
