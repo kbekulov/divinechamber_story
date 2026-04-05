@@ -166,19 +166,23 @@ code {
 .brand-logo {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  aspect-ratio: 1 / 1;
+  background-color: rgba(103, 118, 149, 0.92);
+  -webkit-mask: url("img/logo.png") center / contain no-repeat;
+  mask: url("img/logo.png") center / contain no-repeat;
   filter:
-    drop-shadow(0 10px 18px rgba(50, 42, 20, 0.12))
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35));
+    drop-shadow(0 8px 16px rgba(63, 74, 98, 0.14))
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.42));
+  opacity: 0.96;
 }
 
 .brand-logo--sidebar {
-  width: clamp(11.5rem, 14vw, 14.5rem);
+  width: clamp(10rem, 12vw, 12.5rem);
 }
 
 .brand-logo--drawer {
-  width: min(11rem, 65vw);
+  width: min(9.75rem, 58vw);
+  background-color: rgba(111, 128, 164, 0.94);
 }
 
 .sidebar-copy,
